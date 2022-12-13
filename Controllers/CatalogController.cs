@@ -11,12 +11,14 @@ namespace Shop.Controllers
 
         private readonly IRepository<CatalogItem> _catalogRepository;
 
-        public CatalogController()
+        public CatalogController(
+            IRepository<CatalogItem> catalogRepository,
+            ICatalogItemViewModelService catalogItemViewModelService)
         {
             //TODO replace to IoC approach
-            _catalogItemViewModelService = new CatalogItemViewModelService();
+            _catalogItemViewModelService = catalogItemViewModelService;
 
-            _catalogRepository = new LocalCatalogItemRepository();
+            _catalogRepository = catalogRepository;
         }
         public IActionResult Index()
         {

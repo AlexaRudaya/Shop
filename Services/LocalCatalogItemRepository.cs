@@ -21,6 +21,10 @@ namespace Shop.Services
             new(12,"Prism White TShirt", "Prism White TShirt", 12, "/images/products/12.png")
         };
 
+        public LocalCatalogItemRepository()
+        {
+
+        }
         public List<CatalogItem> GetALL()
         {
             return _catalogItems;
