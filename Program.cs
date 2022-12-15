@@ -1,3 +1,4 @@
+using Shop.Configuration;
 using Shop.Interfaces;
 using Shop.Models;
 using Shop.Services;
@@ -7,11 +8,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddCoreServices();
+
 builder.Services.AddScoped(typeof(IRepository<CatalogItem>), typeof(LocalCatalogItemRepository));
 
 builder.Services.AddScoped<ICatalogItemViewModelService, CatalogItemViewModelService>();
 
 var app = builder.Build();
+app.Logger.LogInformation("App created...");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
