@@ -1,4 +1,4 @@
-﻿namespace Shop.Interfaces
+﻿namespace Shop.ApplicationCore.Interfaces
 {
     public interface IRepository<T> where T : class
     {
@@ -7,5 +7,7 @@
         void Update(T entity);
 
         List<T> GetALL();
+
+        Task<List<T>> GetAllAsync();
     }
 }

@@ -1,4 +1,4 @@
-﻿using Shop.Interfaces;
+﻿using Shop.ApplicationCore.Interfaces;
 using Shop.Models;
 
 namespace Shop.Services
@@ -28,6 +28,11 @@ namespace Shop.Services
         public List<CatalogItem> GetALL()
         {
             return _catalogItems;
+        }
+
+        public Task<List<CatalogItem>> GetAllAsync()
+        {
+            throw new NotImplementedException(); 
         }
 
         public CatalogItem? GetById(int id)
