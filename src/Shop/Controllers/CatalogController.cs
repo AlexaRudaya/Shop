@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shop.ApplicationCore.Interfaces;
 using Shop.Interfaces;
 using Shop.Models;
 using Shop.Services;
@@ -8,27 +9,19 @@ namespace Shop.Controllers
     public class CatalogController : Controller
     {
         private readonly ICatalogItemViewModelService _catalogItemViewModelService;
-
         private readonly IRepository<CatalogItem> _catalogRepository;
 
         public CatalogController(
             IRepository<CatalogItem> catalogRepository,
             ICatalogItemViewModelService catalogItemViewModelService)
         {
-            //TODO replace to IoC approach
             _catalogItemViewModelService = catalogItemViewModelService;
 
             _catalogRepository = catalogRepository;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var catalogItemsViewModel = _catalogRepository.GetALL().Select(item => new CatalogItemViewModel()
-            {
-                Id = item.Id,
-                Name = item.Name,
-                PictureUrl = item.PictureUrl,
-                Price = item.Price,
-            }).ToList();
+            var catalogItemsViewModel = await _catalogItemViewModelService.GetCatalogItems();
 
             return View(catalogItemsViewModel);
         }
