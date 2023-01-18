@@ -1,4 +1,5 @@
-﻿using Shop.Models;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Shop.Models;
 
 namespace Shop.Interfaces
 {
@@ -6,6 +7,9 @@ namespace Shop.Interfaces
     {
         void UpdateCatalogItem(CatalogItemViewModel viewModel);
 
-        Task<IEnumerable<CatalogItemViewModel>> GetCatalogItems();
+        Task<CatalogIndexViewModel> GetCatalogItems(int? brandId, int? typeId);
+
+        Task<IEnumerable<SelectListItem>> GetBrands();
+        Task<IEnumerable<SelectListItem>> GetTypes();
     }
 }
