@@ -12,16 +12,20 @@ namespace Shop.Services
         private readonly IRepository<CatalogBrand> _brandRepository;
         private readonly IRepository<CatalogType> _typeRepository;
         private readonly IAppLogger<CatalogItemViewModelService> _logger;
+        private readonly IUriComposer _uriComposer;
+
 
         public CatalogItemViewModelService(IRepository<CatalogItem> catalogItemRepository,
             IAppLogger<CatalogItemViewModelService> logger,
             IRepository<CatalogBrand> brandRepository,
-            IRepository<CatalogType> typeRepository)
+            IRepository<CatalogType> typeRepository,
+            IUriComposer uriComposer)
         {
             _catalogItemRepository = catalogItemRepository;
             _logger = logger;
             _brandRepository = brandRepository;
             _typeRepository = typeRepository;
+            _uriComposer = uriComposer;
         }
 
         public async Task<IEnumerable<SelectListItem>> GetBrands()
@@ -69,7 +73,7 @@ namespace Shop.Services
             {
                 Id = item.Id,
                 Name = item.Name,
-                PictureUrl = item.PictureUrl,
+                PictureUrl = _uriComposer.ComposeImageUri(item.PictureUrl),
                 Price = item.Price,
             }).ToList();
 

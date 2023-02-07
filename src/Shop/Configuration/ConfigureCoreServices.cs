@@ -1,5 +1,4 @@
-﻿using NuGet.Common;
-using Shop.ApplicationCore.Interfaces;
+﻿using Shop.ApplicationCore.Interfaces;
 using Shop.Infrastructure;
 
 namespace Shop.Configuration
