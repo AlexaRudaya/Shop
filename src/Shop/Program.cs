@@ -1,14 +1,27 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shop.ApplicationCore;
+using Shop.ApplicationCore.Identity;
 using Shop.ApplicationCore.Interfaces;
+using Shop.ApplicationCore.Services;
 using Shop.Configuration;
 using Shop.Infrastructure.Data;
 using Shop.Interfaces;
-using Shop.Models;
 using Shop.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("AppIdentityDbContextConnection") ?? throw new InvalidOperationException("Connection string 'AppIdentityDbContextConnection' not found.");
+
+builder.Services.AddDbContext<AppIdentityDbContext>(options => options.UseSqlServer(connectionString));
 
 Shop.Infrastructure.Dependencies.ConfigureServices(builder.Configuration, builder.Services);
+
+//Configure Identity
+builder.Services
+    .AddIdentity<ApplicationUser, IdentityRole>()
+    .AddDefaultUI()
+    .AddEntityFrameworkStores<AppIdentityDbContext>()
+    .AddDefaultTokenProviders();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -16,6 +29,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddCoreServices();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 builder.Services.AddScoped<ICatalogItemViewModelService, CatalogItemViewModelService>();
+builder.Services.AddSingleton<IUriComposer>(new UriComposer(builder.Configuration.Get<CatalogSettings>()));
 
 var app = builder.Build();
 app.Logger.LogInformation("App created...");
@@ -31,13 +45,18 @@ using (var scope = app.Services.CreateScope())
         {
             catalogContext.Database.Migrate();
         }
-        await CatalogContextSeed.SeedAsync(catalogContext, app.Logger); 
+        await CatalogContextSeed.SeedAsync(catalogContext, app.Logger);
+
+        var identityContext = scopedProvider.GetRequiredService<AppIdentityDbContext>();
+        if (identityContext.Database.IsSqlServer())
+        {
+            identityContext.Database.Migrate();
+        }
     }
     catch (Exception ex)
     {
         app.Logger.LogError(ex, "An error occurred adding migrations to Database.");
     }
-
 }
 
 // Configure the HTTP request pipeline.
@@ -53,10 +72,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
 app.Run();

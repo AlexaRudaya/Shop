@@ -71,5 +71,35 @@ namespace Shop.Controllers
                 return View();
             }
         }
+
+        private string GetOrSetBasketCookieAndUserName()
+        {
+            string? userName = default;
+
+            if (this.HttpContext.User.Identity.IsAuthenticated)
+            {
+                return this.Request.HttpContext.User.Identity.Name;
+            }
+
+            if (this.Request.Cookies.ContainsKey("eShop"))
+            {
+                userName = Request.Cookies["eShop"];
+
+                if (!Request.HttpContext.User.Identity.IsAuthenticated)
+                {
+                    userName = default;
+                }
+            }
+
+            if (userName != null) return userName;
+
+            userName = Guid.NewGuid().ToString();
+            var cookieOptions = new CookieOptions();
+            cookieOptions.Expires = DateTime.Now.AddDays(30);
+
+            Response.Cookies.Append("eShop", userName, cookieOptions);
+
+            return userName;
+        }
     }
 }
