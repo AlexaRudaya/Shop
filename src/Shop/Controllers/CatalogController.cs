@@ -9,21 +9,38 @@ namespace Shop.Controllers
     public class CatalogController : Controller
     {
         private readonly ICatalogItemViewModelService _catalogItemViewModelService;
+        private readonly IBasketService _basketService;
         private readonly IRepository<CatalogItem> _catalogRepository;
 
         public CatalogController(
             IRepository<CatalogItem> catalogRepository,
-            ICatalogItemViewModelService catalogItemViewModelService)
+            ICatalogItemViewModelService catalogItemViewModelService,
+            IBasketService basketService)
         {
             _catalogItemViewModelService = catalogItemViewModelService;
 
+            _basketService = basketService;
+
             _catalogRepository = catalogRepository;
         }
-        public async Task<IActionResult> Index(CatalogIndexViewModel model)
+
+        [HttpGet]
+        public async Task<IActionResult> Index(int? brandFilterApplied, int? typesFilterApplied)
         {
-            var viewModel = await _catalogItemViewModelService.GetCatalogItems(model.BrandFilterApplied, model.TypesFilterApplied);
+            var userName = GetOrSetBasketCookieAndUserName();
+
+            var viewModel = await _catalogItemViewModelService.GetCatalogItems(brandFilterApplied, typesFilterApplied);
 
             return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(int id)
+        {
+            var userName = GetOrSetBasketCookieAndUserName();
+            var basket = await _basketService.AddItem2Basket(userName);
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult Details(int id)
