@@ -6,6 +6,8 @@
 
         void Update(T entity);
 
+        public Task<T> AddAsync(T entity);
+
         List<T> GetALL();
 
         Task<List<T>> GetAllAsync();
