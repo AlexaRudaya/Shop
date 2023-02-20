@@ -12,10 +12,9 @@ namespace Shop.ApplicationCore.Services
             _basketRepository = basketRepository;
         }
 
-        public async Task<Basket> AddItem2Basket(string userName)
+        public async Task<Basket> AddItem2Basket(string userName, int catalogItemId, decimal price, int quantity = 1)
         {
-            //TODO check if basket is alredy exist for this user
-            Basket basket = default;
+            var basket = await _basketRepository.FirstOrDefaultAsync(_=>_.BuyerId == userName);
 
             if (basket is null)
             {
@@ -23,6 +22,9 @@ namespace Shop.ApplicationCore.Services
                 basket = await _basketRepository.AddAsync(basket);
             }
             
+            basket.AddItem(catalogItemId, price, quantity);
+            await _basketRepository.UpdateAsync(basket);
+
             return basket;
         }
     }
