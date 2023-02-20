@@ -35,10 +35,10 @@ namespace Shop.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(int id)
+        public async Task<IActionResult> Index(int id, decimal price)
         {
             var userName = GetOrSetBasketCookieAndUserName();
-            var basket = await _basketService.AddItem2Basket(userName);
+            var basket = await _basketService.AddItem2Basket(userName, id, price);
 
             return RedirectToAction("Index");
         }

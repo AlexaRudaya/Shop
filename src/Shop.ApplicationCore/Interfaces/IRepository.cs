@@ -1,15 +1,21 @@
-﻿namespace Shop.ApplicationCore.Interfaces
+﻿using System.Linq.Expressions;
+
+namespace Shop.ApplicationCore.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        T? GetById(int id);
+        public T? GetById(int id);
 
-        void Update(T entity);
+        public void Update(T entity);
 
         public Task<T> AddAsync(T entity);
 
-        List<T> GetALL();
+        public Task UpdateAsync(T entity);
 
-        Task<List<T>> GetAllAsync();
+        public List<T> GetALL();
+
+        public Task<List<T>> GetAllAsync();
+
+        public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
     }
 }
