@@ -62,6 +62,11 @@ namespace Shop.Services
             return items;
         }
 
+        public async Task<CatalogIndexViewModel> GetCatalogItems(int pageIndex, int itemsPage, int? brandId, int? typeId)
+        {
+            return await GetCatalogItems(brandId, typeId);
+        }
+
         public async Task<CatalogIndexViewModel> GetCatalogItems(int? brandId, int? typeId)
         {
             var entities = await _catalogItemRepository.GetAllAsync();
@@ -87,7 +92,7 @@ namespace Shop.Services
             return viewModel;
         }
 
-    public void UpdateCatalogItem(CatalogItemViewModel viewModel)
+        public void UpdateCatalogItem(CatalogItemViewModel viewModel)
     {
         var existingCatalogItem = _catalogItemRepository.GetById(viewModel.Id);
         if (existingCatalogItem is null)
@@ -106,5 +111,6 @@ namespace Shop.Services
             $" Price {existingCatalogItem.Price}");
         _catalogItemRepository.Update(existingCatalogItem);
     }
-}
+
+    }
 }
