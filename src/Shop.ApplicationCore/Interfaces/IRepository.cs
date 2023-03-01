@@ -17,5 +17,7 @@ namespace Shop.ApplicationCore.Interfaces
         public Task<List<T>> GetAllAsync();
 
         public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+
+        public Task<T> GetByIdAsync<TId>(TId id);
     }
 }

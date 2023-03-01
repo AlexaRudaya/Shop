@@ -26,3 +26,8 @@ else
     </li>
 }
 </ul>
+
+<section class="col-lg-1 col-xs-12">
+    @*<partial name="~/Views/Shared/Patials/_BasketPartial.cshtml"></>*@
+    @await Component.InvokeAsync("Basket")
+</section>

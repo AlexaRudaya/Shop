@@ -41,6 +41,11 @@ namespace Shop.Infrastructure.Data
             throw new NotImplementedException();
         }
 
+        public async Task<T> GetByIdAsync<TId>(TId id)
+        {
+            return await _dbContext.Set<T>().FindAsync(id);
+        }
+
         public void Update(T entity)
         {
             throw new NotImplementedException();

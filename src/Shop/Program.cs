@@ -6,6 +6,7 @@ using Shop.ApplicationCore.Interfaces;
 using Shop.ApplicationCore.Services;
 using Shop.Configuration;
 using Shop.Infrastructure.Data;
+using Shop.Infrastructure.Data.Queries;
 using Shop.Interfaces;
 using Shop.Services;
 
@@ -24,12 +25,16 @@ builder.Services
     .AddDefaultTokenProviders();
 
 // Add services to the container.
+builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddCoreServices();
 builder.Services.AddScoped(typeof(IRepository<>), typeof(EFRepository<>));
 builder.Services.AddScoped<ICatalogItemViewModelService, CatalogItemViewModelService>();
 builder.Services.AddSingleton<IUriComposer>(new UriComposer(builder.Configuration.Get<CatalogSettings>()));
+builder.Services.AddScoped<IBasketViewModelService, BasketViewModelService>();
+builder.Services.AddScoped<IBasketQueryService, BasketQueryService>();
+
 
 var app = builder.Build();
 app.Logger.LogInformation("App created...");

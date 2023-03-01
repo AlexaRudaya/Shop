@@ -59,11 +59,12 @@ namespace Shop.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var item = _catalogRepository.GetById(id);
-            if (item == null) return RedirectToAction("Index");
+            var items = await _catalogRepository.GetAllAsync();
+            if (items == null) return RedirectToAction("Index");
 
+            var item = items.First();
             var result = new CatalogItemViewModel()
             {
                 Id = item.Id,

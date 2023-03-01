@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop", "src\Shop\Shop.csproj", "{9D4F90EC-B5C1-4BCC-9CCE-DA2BC8742129}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.ApplicationCore", "src\Shop.ApplicationCore\Shop.ApplicationCore.csproj", "{27B31F80-2DFA-4A7B-B1D2-3B852DA3265C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.ApplicationCore", "src\Shop.ApplicationCore\Shop.ApplicationCore.csproj", "{27B31F80-2DFA-4A7B-B1D2-3B852DA3265C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shop.Infrastructure", "src\Shop.Infrastructure\Shop.Infrastructure.csproj", "{E067C10A-FC6E-41B3-96E5-BD6E56968728}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shop.Infrastructure", "src\Shop.Infrastructure\Shop.Infrastructure.csproj", "{E067C10A-FC6E-41B3-96E5-BD6E56968728}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
