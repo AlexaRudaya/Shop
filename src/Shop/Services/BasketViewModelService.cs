@@ -1,6 +1,5 @@
 ﻿using Shop.ApplicationCore.Entites;
 using Shop.ApplicationCore.Interfaces;
-using Shop.ApplicationCore.Services;
 using Shop.Interfaces;
 using Shop.Models;
 using Shop.Pages.Basket;
