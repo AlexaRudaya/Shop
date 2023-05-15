@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace Shop.Infrastructure.Data
 {
-    public class EFRepository<T> : IRepository<T> where T : class //here we work with EF
+    public class EFRepository<T> : IRepository<T> where T : class 
     {
         private readonly CatalogContext _dbContext;
 
@@ -23,7 +23,21 @@ namespace Shop.Infrastructure.Data
 
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
         {
+            //IQueryable<T> query = _dbContext.Set<T>();
+
+            //if (includes != null)
+            //{ 
+            //    query = query.Where(predicate);
+            //}
+
+            //if (query is not null)
+            //{
+            //    query = includes(query);
+            //}
+
             return await _dbContext.Set<T>().FirstOrDefaultAsync(predicate);
+
+            //return await query.FirstOrDefaultAsync();
         }
 
         public List<T> GetALL()

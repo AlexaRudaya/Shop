@@ -1,13 +1,13 @@
 ﻿namespace Shop.ApplicationCore.Entites
 {
-    public sealed class Basket
+    public class Basket
     {
         private readonly List<BasketItem> _items = new();
 
         public int Id { get; set; }
         public string? BuyerId { get; set; }
 
-        public IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
+        public virtual IReadOnlyCollection<BasketItem> Items => _items.AsReadOnly();
 
         public Basket(string userName)
         {
